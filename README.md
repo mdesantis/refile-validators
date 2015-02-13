@@ -8,14 +8,18 @@ WIP - Work In Progress
 class User
   attachment :avatar
 
-  validates :avatar, :'refile/validators/content_type_consistence' =>
-    { strategy: :mini_magick }
-  validates :avatar, :'refile/validators/content_type_consistence' =>
-    { strategy: :mini_magick, content_source: :path }
-  validates :avatar, :'refile/validators/content_type_consistence' =>
-    { strategy: :file, content_source: :path }
-  validates :avatar, :'refile/validators/content_type_consistence' =>
-    { strategy: :magic_gem, content_source: :io }
+  validates :avatar, 
+            validator: 'refile/validators/content_type_consistence',
+            options: { strategy: :mini_magick }
+  validates :avatar, 
+            validator: 'refile/validators/content_type_consistence',
+            options: { strategy: :mini_magick, content_source: :path }
+  validates :avatar, 
+            validator: 'refile/validators/content_type_consistence',
+            options: { strategy: :file, content_source: :path }
+  validates :avatar, 
+            validator: 'refile/validators/content_type_consistence',
+            options: { strategy: :magic_gem, content_source: :io }
 end
 ```
 
