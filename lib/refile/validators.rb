@@ -5,6 +5,6 @@ module Refile
   module Validators
     extend ActiveSupport::Autoload
 
-    autoload :ContentTypeConsistenceValidator
+    autoload :ContentTypeConsistence
   end
 end

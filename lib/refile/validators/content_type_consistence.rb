@@ -1,14 +1,18 @@
 require 'active_model/validator'
+require 'active_support/core_ext/module/delegation'
 require 'mime/types'
 require 'mini_magick'
 
 module Refile
   module Validators
-    class ContentTypeConsistenceValidator < ActiveModel::EachValidator
+    class ContentTypeConsistence < ActiveModel::EachValidator
       require 'refile/validators/version'
       require 'refile/validators'
 
       attr_reader :record, :attribute, :attachment
+
+      delegate :content_type, to: :attacher, prefix: true, allow_nil: true
+      delegate :to_io, to: :attachment, prefix: true, allow_nil: true
 
       def validate_each(record, attribute, attachment)
         @record, @attribute, @attachment = record, attribute, attachment
@@ -20,23 +24,18 @@ module Refile
         record.errors.add attribute, error_type
       end
 
+      def attacher_method
+        "#{attribute}_attacher"
+      end
+
       def attacher
-        attacher_method = "#{attribute}_attacher"
         record.send attacher_method
       end
 
-      def attacher_content_type
-        attacher.try :content_type
-      end
-
-      def attachment_io
-        attachment.try :to_io
-      end
-
       def attachment_path
-        return nil unless attachment_io = attachment_io()
+        return nil unless attachment_to_io = attachment_to_io()
 
-        return attachment_io.path if attachment_io.respond_to?(:path)
+        return attachment_to_io.path if attachment_to_io.respond_to?(:path)
 
         attachment.try(:download).try(:path)
       end
