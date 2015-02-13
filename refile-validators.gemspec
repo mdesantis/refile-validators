@@ -11,9 +11,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/mdesantis/refile-validators'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split('\x0')
-  spec.test_files    = spec.files.grep(%r{^spec/})
-  spec.require_paths = %w[lib spec]
+  spec.files        = Dir['README.md', 'LICENSE.txt', 'lib/**/*']
+  spec.test_files   = Dir['spec/**/*']
+  spec.require_path = 'lib'
 
   spec.required_ruby_version = '>= 2.1.0'
 
