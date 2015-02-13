@@ -1,5 +1,5 @@
 module Refile
-  RSpec.describe Validator do
+  RSpec.describe Validators do
     describe '.valid?' do
     end
   end
